@@ -1,3 +1,4 @@
+
 {
   "hosting": {
     "public": "dist/electromedicina/browser",
@@ -9,7 +10,7 @@
     "rewrites": [
       {
         "source": "**",
-        "destination": "/index.html"
+        "destination": "/index.csr.html"
       }
     ]
   },
