@@ -1,0 +1,32 @@
+
+html, body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.contenido-principal {
+  flex: 1;
+  width: 100%;
+}
+
+app-footer {
+  display: block;
+  width: 100%;
+  margin-top: auto;
+  background-color: #293849;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  box-sizing: border-box;
+}

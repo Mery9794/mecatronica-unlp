@@ -1,0 +1,55 @@
+google-map {
+  height: 100%;
+  width: 100%;
+
+}
+
+.container {
+  display: flex;
+  margin-left: 5px;
+}
+
+.map-container {
+  flex: 1;
+  height: 100%;
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+}
+
+.info-panel {
+  width: 0;
+  overflow: hidden;
+  background-color: #fff;
+  transition: width 0.3s ease;
+  box-shadow: -4px 0 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.info-panel.open {
+  width: 35vw; 
+  padding: 20px;
+}
+
+.close-btn {
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  color: #555;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.close-btn:hover {
+  color: red;
+}
+
+@media (max-width: 768px) {
+  .info-panel.open {
+    width: 100vw;
+  }
+}

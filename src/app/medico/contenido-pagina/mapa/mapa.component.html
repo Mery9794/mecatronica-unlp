@@ -1,0 +1,21 @@
+<div *ngIf="apiLoaded | async; else loading" class="container">
+  <!-- Mapa -->
+  <div class="map-container" style="height: 500px; width: 640px; position: relative; overflow: hidden;">
+    <google-map [center]="center" [zoom]="zoom" class="map">
+      <map-marker *ngFor="let marker of markers; let i = index" [position]="marker.position!" [title]="marker.title"
+        (mapClick)="onMarkerClick(marker)">
+      </map-marker>
+    </google-map>
+  </div>
+  <!-- Panel de Información -->
+  <div class="info-panel" [class.open]="infoContent">
+    <button class="close-btn" (click)="closeInfoPanel()">✖</button>
+    <h3>Detalles del Paciente</h3>
+    <div [innerHTML]="infoContent" *ngIf="infoContent"></div>
+  </div>
+</div>
+
+<!-- Carga de mapa -->
+<ng-template #loading>
+  <p>Loading map...</p>
+</ng-template>

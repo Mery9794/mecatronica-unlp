@@ -1,0 +1,65 @@
+.cuadrosPc {
+ text-align: center;
+  position: relative;
+  width: 100%;
+}
+
+.Inicio {
+  background-color: #ffffff; 
+} 
+
+.flex-container-paciente2 {
+  padding: 20px;
+  top: 0;
+  display: flex;
+}
+
+app-add-favs {
+  justify-content: space-between;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+  z-index: 1;
+
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid #ccc;
+  margin: 10px;
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+  color: rgb(8, 8, 8);
+}
+
+.d-block.w-100 {
+  width: 100%;
+  height: auto;
+}
+
+.cuadrosPc img {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 767px) {
+  .flex-container-paciente2 {
+    display: flex;
+  }
+
+  .card {
+    flex: 1 0 48%;
+    margin: 1%;
+    font-size: 0.7em;
+    padding: 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  app-add-favs {
+    top: 140px;
+  }
+
+}

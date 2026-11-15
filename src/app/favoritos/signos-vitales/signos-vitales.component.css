@@ -1,0 +1,168 @@
+.signos-vitales-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 71px;
+  padding: 40px;
+  background: linear-gradient(to bottom, #00bce2 37%, #0195b9 0%);
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #fff; 
+}
+
+
+.patient-info {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.patient-info h2 {
+  color: #fff; 
+}
+
+.metric-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0; 
+}
+
+.carousel-item {
+  background: inherit; 
+  padding: 20px; 
+  border-radius: 5px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff; 
+}
+
+.days {
+  display: flex;
+  overflow-x: auto;
+  margin-bottom: 20px;
+  background: inherit; 
+  color: #fff; 
+}
+
+.day-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 10px; 
+}
+
+.day-metric {
+  display: grid;
+  justify-items: center;
+  color: #fff; 
+}
+
+.temp-info p {
+  margin: 5px 0;
+  color: #fff;
+}
+
+.icon-selector {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+.icon-button {
+  background-color: #34aac8;
+  color: #fff; 
+  border: none;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  margin: 0 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.icon-button:hover {
+  background-color: #3bc3e5;
+}
+
+.days .day {
+  margin-bottom: 20px;
+  color: #fff; 
+}
+
+span.metric-value {
+  padding-top: 20px;
+  color: #fff; 
+}
+
+.fa-solid.fa-temperature-high.normal, 
+.fa-solid.fa-gauge-high.normal,
+.fa-solid.fa-lungs.normal {
+  color: #2ce432 !important;
+}
+
+.fa-solid.fa-temperature-high.warning,
+.fa-solid.fa-gauge-high.warning,
+.fa-solid.fa-lungs.warning {
+  color: orange !important;
+}
+
+.fa-solid.fa-gauge-high.warning-low {
+  color: orange !important;
+}
+
+.fa-solid.fa-temperature-high.danger,
+.fa-solid.fa-gauge-high.danger,
+.fa-solid.fa-lungs.danger {
+  color: red !important;
+}
+
+.fa-solid.fa-temperature-high.no-data,
+.fa-solid.fa-gauge-high.no-data,
+.fa-solid.fa-lungs.no-data {
+  color: #73b9cb !important;
+}
+
+.metric-value.no-data {
+  color: #73b9cb;
+}
+
+
+.arrow {
+  font-size: 24px;
+  cursor: pointer;
+  color: white;
+  margin: 0 10px;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.arrow:hover {
+  opacity: 1;
+}
+
+
+.chart-container {
+  width: 100%;
+  background: inherit; 
+  color: #fff;
+}
+
+.graph-view {
+  width: 100%;
+  height: 300px;
+  display: none; 
+}
+
+.graph-view.active {
+  display: block; 
+}
+.carousel-item.active {
+  padding-left: 70px;
+  padding-right: 70px;
+}
+
+span.metric-value {
+  text-align: -webkit-center;
+}

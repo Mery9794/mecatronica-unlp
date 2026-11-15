@@ -1,0 +1,136 @@
+<div class="signos-vitales-container">
+  <!-- Información del Paciente -->
+  <div class="patient-info">
+    <h2>Métrica de: {{ paciente?.apellido }} {{ paciente?.nombre }}</h2>
+    <div class="metric-info" *ngIf="selectedIcon === 'Temperatura'">
+      <div class="icon-temp">
+        <i class="fas fa-thermometer-half fa-4x"></i>
+      </div>
+      <h2>{{ currentTemperature }}°C</h2>
+    </div>
+    <div class="metric-info" *ngIf="selectedIcon === 'Presión Arterial'">
+      <div class="icon-pressure">
+        <i class="fa-solid fa-gauge-high fa-4x"></i>
+      </div>
+      <h2>{{ currentSystolicPressure }}/{{ currentDiastolicPressure }} mmHg</h2>
+    </div>
+    <div class="metric-info" *ngIf="selectedIcon === 'Oxígeno'">
+      <div class="icon-oxygen">
+        <i class="fas fa-tint fa-4x"></i>
+      </div>
+      <h2>{{ currentOxygen }} %</h2>
+    </div>
+  </div>
+
+  <!-- Carrusel de Métricas -->
+  <div id="carouselExampleFade" class="carousel slide carousel-fade">
+    <div class="carousel-inner">
+      <!-- Vista de Métricas Diarias -->
+      <div class="carousel-item active">
+         <!-- Temperatura -->
+        <div class="days" *ngIf="selectedIcon === 'Temperatura'">
+          <ng-container *ngFor="let day of days">
+            <div class="day-wrapper">
+              <p class="day">{{ day }}</p>
+              <div class="day-metric">
+                <i [ngClass]="{
+                  'fa-solid fa-temperature-high': true,
+                  'danger': +getMetricValue(day, 'Temperatura') >= 39.9,
+                  'warning': +getMetricValue(day, 'Temperatura') >= 37.5 && +getMetricValue(day, 'Temperatura') < 39.9,
+                  'normal': +getMetricValue(day, 'Temperatura') >= 37 && +getMetricValue(day, 'Temperatura') < 37.5,
+                  'warning-low': +getMetricValue(day, 'Temperatura') < 37 && +getMetricValue(day, 'Temperatura') >= 36,
+                  'no-data': getMetricValue(day, 'Temperatura') === 'N/A' || +getMetricValue(day, 'Temperatura') < 36
+                }">
+                </i>
+                <span [ngClass]="{
+                  'no-data': getMetricValue(day, 'Temperatura') === 'N/A'
+                }" class="metric-value">
+                  {{ getMetricValue(day, 'Temperatura') === 'N/A' ? 'N/A' : getMetricValue(day, 'Temperatura') + '°C' }}
+                </span>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <!-- Presión Arterial -->
+        <div class="days" *ngIf="selectedIcon === 'Presión Arterial'">
+          <ng-container *ngFor="let day of days">
+            <div class="day-wrapper">
+              <p class="day">{{ day }}</p>
+              <div class="day-metric">
+                <i [ngClass]="{
+          'fa-solid fa-gauge-high': true,
+          'danger': getSystolicPressure(day) >= 140 || getDiastolicPressure(day) >= 90,
+          'warning': (getSystolicPressure(day) >= 130 && getSystolicPressure(day) < 140) || (getDiastolicPressure(day) >= 80 && getDiastolicPressure(day) < 90),
+          'warning-low': getSystolicPressure(day) < 90 || getDiastolicPressure(day) < 60,
+          'normal': getSystolicPressure(day) >= 90 && getSystolicPressure(day) <= 120 && getDiastolicPressure(day) < 80,
+          'no-data': getMetricValue(day, 'Presión Arterial') === 'N/A'
+        }"></i>
+                <span [ngClass]="{
+          'no-data': getMetricValue(day, 'Presión Arterial') === 'N/A'
+        }" class="metric-value">
+                  {{ getMetricValue(day, 'Presión Arterial') === 'N/A' ? 'N/A' : getMetricValue(day, 'Presión Arterial')
+                  + ' mmHg' }}
+                </span>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <!-- Oxígeno -->
+        <div class="days" *ngIf="selectedIcon === 'Oxígeno'">
+          <ng-container *ngFor="let day of days">
+            <div class="day-wrapper">
+              <p class="day">{{ day }}</p>
+              <div class="day-metric">
+                <i [ngClass]="{
+          'fa-solid fa-lungs': true,
+          'danger': +getMetricValue(day, 'Oxígeno') < 90,
+          'warning': +getMetricValue(day, 'Oxígeno') >= 90 && +getMetricValue(day, 'Oxígeno') < 95,
+          'normal': +getMetricValue(day, 'Oxígeno') >= 95,
+          'no-data': getMetricValue(day, 'Oxígeno') === 'N/A'
+        }"></i>
+                <span [ngClass]="{
+          'no-data': getMetricValue(day, 'Oxígeno') === 'N/A'
+        }" class="metric-value">
+                  {{ getMetricValue(day, 'Oxígeno') === 'N/A' ? 'N/A' : getMetricValue(day, 'Oxígeno') + '%' }}
+                </span>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+
+        <!-- Vista de Diagramas de Métricas -->
+        <div class="carousel-item">
+
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    <!-- Botones de Selección de Iconos -->
+    <div class="icon-selector">
+      <button class="icon-button" [ngClass]="getButtonClass('Temperatura')" (click)="selectIcon('Temperatura')">
+        <i class="fas fa-thermometer-half fa-2x"></i>
+      </button>
+      <button class="icon-button" [ngClass]="getButtonClass('Presión Arterial')"
+        (click)="selectIcon('Presión Arterial')">
+        <i class="fa-solid fa-tachometer fa-2x"></i>
+      </button>
+      <button class="icon-button" [ngClass]="getButtonClass('Oxígeno')" (click)="selectIcon('Oxígeno')">
+        <i class="fas fa-tint fa-2x"></i>
+      </button>
+    </div>
+
+    <!-- Fecha Actual -->
+    <div class="current-date">
+      {{ currentDate | date: 'EEEE, d MMMM' }}
+    </div>

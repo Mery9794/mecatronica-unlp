@@ -1,0 +1,109 @@
+  <div class="boton">
+    <h2>Lista de Pacientes</h2> 
+    <div class="dropdown">
+      <button class="dropbtn">Mostrar</button>
+      <div class="dropdown-content">
+        <button class="btnnum" (click)="setItemsToShow(5)" [ngClass]="{'active': itemsToShow === 5}"><span>5</span></button>
+        <button class="btnnum" (click)="setItemsToShow(10)" [ngClass]="{'active': itemsToShow === 10}"><span>10</span></button>
+        <button class="btnnum" (click)="setItemsToShow(15)" [ngClass]="{'active': itemsToShow === 15}"><span>15</span></button>
+        <button class="btnnum" (click)="setItemsToShow(25)" [ngClass]="{'active': itemsToShow === 25}"><span>25</span></button>
+        <button class="btnnum" (click)="setItemsToShow(pacientes.length)" [ngClass]="{'active': itemsToShow === pacientes.length}"><span>Todos</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabla">
+    <table>
+      <thead>
+        <tr>
+          <th>Datos <i class="fa-solid fa-toggle-on"></i></th>
+          <th>Apellido y Nombre
+            <button (click)="toggleSort()" class="sort-btn">
+              <div class="sort-icons">
+                <i class="fa-solid fa-angle-up" [ngClass]="{'active': ordenAscendente}"></i>
+                <i class="fa-solid fa-angle-down" [ngClass]="{'active': !ordenAscendente}"></i>
+              </div>
+            </button>
+          </th>
+          <th>Contacto</th>
+          <th>Edad
+            <button (click)="toggleSortByAge()" class="sort-btn">
+              <div class="sort-icons">
+                <i class="fa-solid fa-angle-up" [ngClass]="{'active': ordenEdadAscendente}"></i>
+                <i class="fa-solid fa-angle-down" [ngClass]="{'active': !ordenEdadAscendente}"></i>
+              </div>
+            </button>
+          </th>
+          <th>Signos Vitales
+            <!-- Botones de orden por signo vital -->
+            <button (click)="toggleSortBySignoVital('Oxígeno')" class="sort-btn">
+              <div class="sort-content">
+                <i class="fa-solid fa-lungs"></i>
+                <div class="sort-icons">
+                  <i class="fa-solid fa-angle-up" [ngClass]="{'active': ordenSignosAscendente['Oxígeno']}"></i>
+                  <i class="fa-solid fa-angle-down" [ngClass]="{'active': !ordenSignosAscendente['Oxígeno']}"></i>
+                </div>
+              </div>
+            </button>
+            <button (click)="toggleSortBySignoVital('Presión Arterial')" class="sort-btn">
+              <div class="sort-content">
+                <i class="fa-solid fa-tachometer-alt"></i>
+                <div class="sort-icons">
+                  <i class="fa-solid fa-angle-up" [ngClass]="{'active': ordenSignosAscendente['Presión Arterial']}"></i>
+                  <i class="fa-solid fa-angle-down" [ngClass]="{'active': !ordenSignosAscendente['Presión Arterial']}"></i>
+                </div>
+              </div>
+            </button>
+            <button (click)="toggleSortBySignoVital('Temperatura')" class="sort-btn">
+              <div class="sort-content">
+                <i class="fa-solid fa-temperature-high"></i>
+                <div class="sort-icons">
+                  <i class="fa-solid fa-angle-up" [ngClass]="{'active': ordenSignosAscendente['Temperatura']}"></i>
+                  <i class="fa-solid fa-angle-down" [ngClass]="{'active': !ordenSignosAscendente['Temperatura']}"></i>
+                </div>
+              </div>
+            </button>
+          </th>
+          <th>Historial</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <ng-container *ngFor="let paciente of pacientes | slice:0:itemsToShow">
+          <tr>
+            <td>
+              <button class="bot-historial" [ngClass]="{'active': expandedPatientId === paciente.idPaciente.toString()}"
+                (click)="toggleHistorialClinico(paciente)">
+                <div class="toggle-slider"></div>
+                <i class="fas fa-check toggle-icon"></i>
+              </button>
+            </td>
+            <td><b>{{ paciente.apellido }} {{ paciente.nombre }}</b></td>
+            <td>{{ paciente.telefono }}</td>
+            <td>{{ paciente.edad }}</td>
+            <td>
+              <div *ngIf="paciente.metricas && paciente.metricas.length > 0" class="metricas-container">
+                <span *ngFor="let metrica of paciente.metricas" class="metrica">
+                  {{ metrica.valor }}
+                  <i [ngClass]="getIconForMetric(metrica)" [style.color]="getColorForMetric(metrica)"></i>
+                </span>
+              </div>
+              <ng-template #noMetricas><span>N/A</span></ng-template>
+            </td>
+            <td>
+              <button class="bot-signos-vitales" (click)="toggleSignosVitales($event, paciente)">Signos Vitales</button>
+            </td>
+          </tr>
+          <tr *ngIf="expandedPatientId === paciente.idPaciente.toString()">
+            <td colspan="6">
+              <app-historial-clinico [paciente]="paciente"></app-historial-clinico>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination-info">
+    Mostrando {{ getStartIndex() }} a {{ getEndIndex() }} de {{ pacientes.length }} registros
+  </div>

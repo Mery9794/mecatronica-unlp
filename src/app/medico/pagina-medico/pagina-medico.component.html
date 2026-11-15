@@ -1,0 +1,83 @@
+<div class="w3-container">
+
+  <div class="w3-bar w3-blue d-flex justify-content-between desktop-bar">
+    <h1 class="w3-bar-item1 w3-left">
+      Profesional: {{ usuario.apellido }}, {{ usuario.nombre }}
+    </h1>
+
+    <h3 class="w3-bar-item1 w3-right">
+      {{ saludo }}
+    </h3>
+  </div>
+
+  <!-- Botones de navegación -->
+  <div class="container">
+    <div class="left-buttons">
+
+      <button
+        class="nav-button"
+        [ngClass]="{'active': botonActivo === 'Inicio'}"
+        (click)="cambiarPestana('Inicio')">
+        Inicio
+        <i class="fas fa-home"></i>
+      </button>
+
+      <button
+        class="nav-button"
+        [ngClass]="{'active': botonActivo === 'Mapeo'}"
+        (click)="cambiarPestana('Mapeo')">
+        Mapeo
+        <i class="fa-solid fa-map-location-dot"></i>
+      </button>
+
+      <button
+        class="nav-button"
+        [ngClass]="{'active': botonActivo === 'Registro'}"
+        (click)="cambiarPestana('Registro')">
+        Registro Paciente
+        <i class="fas fa-info-circle"></i>
+      </button>
+
+    </div>
+
+    <button
+      class="w3-bar-item w3-button tablink w3-right"
+      (click)="cerrarSesion()">
+      Cerrar
+      <i class="fas fa-sign-out-alt"></i>
+    </button>
+  </div>
+
+</div>
+
+<!-- Contenido de las pestañas -->
+
+<!-- Inicio -->
+<div
+  id="Inicio"
+  class="w3-container sec"
+  *ngIf="pestanasVisible.Inicio">
+
+  <app-home-medico></app-home-medico>
+
+</div>
+
+<!-- Mapeo -->
+<div
+  id="Mapeo"
+  class="w3-container sec"
+  *ngIf="pestanasVisible.Mapeo">
+
+  <app-mapa></app-mapa>
+
+</div>
+
+<!-- Registro de pacientes -->
+<div
+  id="Registro"
+  class="w3-container sec"
+  *ngIf="pestanasVisible.Registro">
+
+  <app-registro-paciente></app-registro-paciente>
+
+</div>
